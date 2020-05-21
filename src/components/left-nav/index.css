@@ -1,0 +1,17 @@
+.left-nav .left-nav-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background-color: #002140;
+}
+.left-nav .left-nav-header img {
+  width: 40px;
+  height: 40px;
+  margin: 0 15px;
+}
+.left-nav .left-nav-header h1 {
+  color: white;
+  font-size: 20px;
+  margin: 0;
+}
+/*# sourceMappingURL=./index.css.map */

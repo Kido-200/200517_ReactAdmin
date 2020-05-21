@@ -1,7 +1,7 @@
 //应用的根组件
 
 import React, {Component} from 'react'
-import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom'
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
 
 
 import Admin from './pages/admin/admin'
@@ -17,7 +17,7 @@ export default class App extends Component{
             <Switch>
                 <Route path='/login' component={Login}></Route>
                 <Route path='/' component={Admin}></Route>
-                <Redirect to='/login' />
+                {/* 一开始去路径path='/'，然后Admin校验是否已经登陆，未登陆就Rirect到login。 */}
             </Switch>
             </BrowserRouter>
         )
