@@ -19,7 +19,7 @@ export default {
         //他会自己转格式
     },
     //删除user
-    remoseUser(){
+    removeUser(){
         // localStorage.removeItem(USER_KEY)
         store.remove(USER_KEY)
     }

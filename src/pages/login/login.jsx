@@ -40,7 +40,7 @@ const Demo = (history)=>{
             return Promise.resolve();
         }
     }
-    const onFinish = async (values)=>{
+    const onFinish = (values)=>{
         console.log('校验成功',values);
         //请求登陆
         const {username,password} = values;

@@ -78,6 +78,7 @@ export default function ajax(url,data={},method='GET'){
     {
         const searchStr = obj2String(data).toString();
        url+='?'+searchStr;
+       console.log('这个url'+url)
        //url?xx=xx&bb=aa 是这样的
         initObj = {
             method:method,
@@ -88,7 +89,6 @@ export default function ajax(url,data={},method='GET'){
         const searchStr = obj2String(data);
         initObj = {
             method:method,
-            credetial:'include',
             headers: new Headers({
                 'Accept': 'application/json',//表示我想要接受的数据类型
                 'Content-Type': 'application/x-www-form-urlencoded'
