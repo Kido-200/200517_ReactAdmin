@@ -15,6 +15,14 @@ export const reqLogin =  (username,password) => ajax('/login',{username,password
 //添加用户
 export const reqAdd = (user) => ajax('/manage/user/add',user,'POST')
 
+//一般查询是GET 会更新数据的是POST
+//获取一级/耳机分类的列表
+export const reqCategorys = (parentId)=>ajax('/manage/category/list',{parentId},'GET')
+//添加分类
+export const reqAddCategory = (categoryName,parentId)=>ajax('/manage/category/add',{categoryName,parentId},'POST')
+//更新分类名称
+export const reqUpdateCategory = ({categoryId,categoryName})=>ajax('/manage/category/update',{categoryId,categoryName},'POST')
+
 
 // jsonp的请求的接口请求函数
 export const reqWeather = (city)=>{

@@ -78,7 +78,6 @@ export default function ajax(url,data={},method='GET'){
     {
         const searchStr = obj2String(data).toString();
        url+='?'+searchStr;
-       console.log('这个url'+url)
        //url?xx=xx&bb=aa 是这样的
         initObj = {
             method:method,
@@ -87,6 +86,7 @@ export default function ajax(url,data={},method='GET'){
     }
     else{
         const searchStr = obj2String(data);
+        // console.log(searchStr)
         initObj = {
             method:method,
             headers: new Headers({

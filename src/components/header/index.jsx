@@ -70,7 +70,7 @@ class Header extends Component{
           });
 
     }
-
+    //获取时间和天气是异步操作，都要放在DidMount
     componentDidMount(){
        this.getTime()
        this.getWeather()

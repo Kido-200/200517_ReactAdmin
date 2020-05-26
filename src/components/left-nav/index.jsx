@@ -79,7 +79,7 @@ class LeftNav extends Component{
     
     //在第一次render之前执行一次
     //为第一次render渲染做准备数据(同步的)
-    componentWillMount(){
+    UNSAFE_componentWillMount (){
          //这个必须提前执行，因为defaultOpenKeys得从这里获得
          this.menuNodes = this.getMenuNodes(menuList)
         //写在render里又会效率低下，每次重新渲染
