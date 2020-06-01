@@ -16,7 +16,7 @@ export const reqLogin =  (username,password) => ajax('/login',{username,password
 export const reqAdd = (user) => ajax('/manage/user/add',user,'POST')
 
 //一般查询是GET 会更新数据的是POST
-//获取一级/耳机分类的列表
+//获取一级/二级分类的列表
 export const reqCategorys = (parentId)=>ajax('/manage/category/list',{parentId},'GET')
 //添加分类
 export const reqAddCategory = (categoryName,parentId)=>ajax('/manage/category/add',{categoryName,parentId},'POST')
@@ -43,4 +43,18 @@ export const reqWeather = (city)=>{
     })
    
 }
-// reqWeather('北京')
+
+//获取商品分页列表
+//searchType的值为productName/productDesc
+export const reqProducts = (pageNum,pageSize) => ajax('manage/product/list',{pageNum,pageSize},'GET')
+
+//搜索商品分页列表
+export const reqSearchProducts = ({pageNum,pageSize,searchName,searchType})=> ajax('/manage/product/search',{
+    pageNum,
+    pageSize,
+   [searchType]:searchName
+   //[]的意思是将searchType的值作为属性名
+},'GET')
+
+//删除图片
+export const reqDeleteImg = (name)=> ajax('/manage/img/delete?name',{name},'POST')
