@@ -3,7 +3,6 @@ import {Link,withRouter} from 'react-router-dom'
 import { Menu } from 'antd';
 
 
-
 import logo from '../../assets/images/logo.png'
 import './index.less'
 import menuList from '../../config/menuConfig'
@@ -45,17 +44,30 @@ class LeftNav extends Component{
 
     //使用reduce()+递归也可以实现
     //pre是上次return的结果
+
+    // <Menu.Item key="/home" >
+    //                 <Link to='/home'>
+    //                 <span>首页</span>
+    //                 </Link>
+    //             </Menu.Item>
     getMenuNodes = (menuList)=>{
         const path = this.props.location.pathname
         return menuList.reduce((pre,item)=>{
             //向pre添加<Menu.Item>
             if(!item.children){
                 pre.push((
-                    <Menu.Item key={item.key} icon={item.icon}>
-                    <Link to={item.key}>
+                    <Menu.Item key={item.key} >
+                    <Link to={item.key} >
+                        {item.icon}
                     <span>{item.title}</span>
                     </Link>
                 </Menu.Item>
+// icon={item.icon}
+                //   <Menu.Item key="/home" >
+                //     <Link to='/home'>
+                //     <span>首页</span>
+                //     </Link>
+                // </Menu.Item>
                 ))
             }
             //向pre添加SubMenu
@@ -103,26 +115,26 @@ class LeftNav extends Component{
                 mode="inline"
                 theme="dark"
                 >
-{/*                     
-                <Menu.Item key="/home" icon={<PieChartOutlined />}>
+                    
+                {/* <Menu.Item key="/home" >
                     <Link to='/home'>
                     <span>首页</span>
                     </Link>
                 </Menu.Item>
                
-                <SubMenu key="sub1" icon={<MailOutlined />} title="商品">
-                    <Menu.Item key="/category" icon={<MailOutlined />}>
+                <SubMenu key="sub1"  title="商品">
+                    <Menu.Item key="/category" >
                         <Link to='/category'>
                     <span>品类管理</span>
                     </Link>
                     </Menu.Item>
-                    <Menu.Item key="/product" icon={<MailOutlined />}>
+                    <Menu.Item key="/product" >
                     <Link to='/product'>
                     <span>商品管理</span>
                     </Link>
                     </Menu.Item>
-                </SubMenu> 
-*/}
+                </SubMenu>  */}
+
             {
                 this.menuNodes
             }
