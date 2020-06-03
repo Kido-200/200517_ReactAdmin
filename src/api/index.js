@@ -46,7 +46,7 @@ export const reqWeather = (city)=>{
 
 //获取商品分页列表
 //searchType的值为productName/productDesc
-export const reqProducts = (pageNum,pageSize) => ajax('manage/product/list',{pageNum,pageSize},'GET')
+export const reqProducts = (pageNum,pageSize) => ajax('/manage/product/list',{pageNum,pageSize},'GET')
 
 //搜索商品分页列表
 export const reqSearchProducts = ({pageNum,pageSize,searchName,searchType})=> ajax('/manage/product/search',{
@@ -58,3 +58,7 @@ export const reqSearchProducts = ({pageNum,pageSize,searchName,searchType})=> aj
 
 //删除图片
 export const reqDeleteImg = (name)=> ajax('/manage/img/delete?name',{name},'POST')
+
+//添加商品 更新商品
+export const reqAddOrUpdateProduct = (product)=> ajax('/manage/product/'+(product._id?'update':'add'),product,'POST')
+

@@ -74,7 +74,7 @@ export default class PicturesWall extends React.Component {
   handleChange = async ({ file,fileList }) => {
       //fileList是所有已上传的图片数组
       //file是当前操作的文件，可能是上传，可能是删除
-      console.log(file,fileList)
+      // console.log(file,fileList)
       //一旦上传成功，将当前上传的file信息修正(name,url)
       if(file.status==='done')
       {

@@ -52,6 +52,7 @@ export default class ProductHome extends Component{
                 width:100,
                 title: '操作',
                 render:(product)=> {
+                    // console.log(product,'product')
                     return (
                         <span>
                             <LinkButton>详情</LinkButton>
