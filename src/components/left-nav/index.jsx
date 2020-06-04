@@ -73,7 +73,7 @@ class LeftNav extends Component{
             //向pre添加SubMenu
             else{
                 //看他的儿子里有没有人的key===url路径里的key
-                const cItem = item.children.find(cItem=> cItem.key===path)
+                const cItem = item.children.find(cItem=> path.indexOf(cItem.key)===0)
                 //如果存在，说明当前item(submenu)的子列表需要展开
                 if(cItem)
                 {
@@ -99,7 +99,13 @@ class LeftNav extends Component{
 
      render(){
          
-         const path = this.props.location.pathname
+        let path = this.props.location.pathname
+        if(path.indexOf('/product')===0)
+        {
+            //说明是请求的product或下面的子路由
+            //改成这个，来使得下面的selectedKeys正确
+            path = '/product'
+        }
         return (
                  <div  className="left-nav">
                 <Link to="/" className="left-nav-header">

@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {Card,Table,Button,Select,Input} from 'antd'
+import {Card,Table,Button,Select,Input, message} from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
 
 import LinkButton from '../../components/link-button'
-import {reqProducts,reqSearchProducts} from '../../api/index'
+import {reqProducts,reqSearchProducts,reqUpdateStatus} from '../../api/index'
 import {PAGE_SIZE} from '../../utils/constants'
 const Option = Select.Option
 //Product的默认子路由组件
@@ -17,7 +17,17 @@ export default class ProductHome extends Component{
         searchType:'productName',//根据那个字段搜索
         search:0,
     }
-
+    updateStatus = async(productId,status) => {
+        const result = await reqUpdateStatus(productId,status)
+        if(result.status===0)
+        {
+            message.success('更新商品成功')
+            this.getProducts(this.pageNum)
+        }
+        else{
+            message.error('更新商品失败')
+        }
+    }
     initColumns(){
         this.columns = [
             {
@@ -37,13 +47,13 @@ export default class ProductHome extends Component{
             {
                 width:100,
                 title: '状态',
-                dataIndex: 'status',
-                render:(status)=> {
-
+                render:(product)=> {
+                    const {status,_id} = product
                     return (
                         <span>
-                            <Button type='primary'>下架</Button>
-                            <span>在售</span>
+                            <Button type='primary' 
+                            onClick={() => this.updateStatus(_id,status===1?2:1)}>{status===1?'下架':'上架'}</Button>
+                            <span>{status===1?'在售':'已下架'}</span>
                         </span>
                     )
                 }
@@ -55,7 +65,7 @@ export default class ProductHome extends Component{
                     // console.log(product,'product')
                     return (
                         <span>
-                            <LinkButton>详情</LinkButton>
+                            <LinkButton onClick={() => this.props.history.push('/product/detail',{product})}>详情</LinkButton>
                             <LinkButton onClick={() => this.props.history.push('./product/addupdate',product)}>修改</LinkButton>
                         </span>
                     )
@@ -68,8 +78,10 @@ export default class ProductHome extends Component{
     //获取指定页面的列表数据显示
     //要是像他那样写在一个函数里，不加是否曾经点过搜索，直接点其他页也会触发条件搜索，我感觉那是bug
     getProducts = async (pageNum)=>{
+        this.pageNum = pageNum //保存一下现在是第几页
         this.setState({loading:true})
         const {searchName,searchType,search} = this.state
+
         let result
         if(search)
         {
@@ -108,7 +120,7 @@ export default class ProductHome extends Component{
              <span>
                  <Select value={searchType} style={{width:150}} onChange={value => this.setState({searchType:value})}>
                    <Option value='productName'>按名称搜索</Option>
-                   <Option value='productDesc'>按秒数搜索</Option>
+                   <Option value='productDesc'>按描述搜索</Option>
                  </Select>
                  <Input 
                  placeholder='关键字' 
@@ -119,10 +131,10 @@ export default class ProductHome extends Component{
                  <Button type='primary' onClick={()=> 
                     {
                         if(searchName)
-                            this.setState({search:1})
+                            this.setState({search:1},()=>{this.getProducts(1)})
                         else
-                        this.setState({search:0})
-                        this.getProducts(1)
+                            this.setState({search:0},()=>{this.getProducts(1)})
+                        
                   } }>搜索</Button>
              </span>
          )

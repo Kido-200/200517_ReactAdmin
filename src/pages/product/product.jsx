@@ -4,17 +4,16 @@ import {Switch,Route,Redirect} from 'react-router-dom'
 import ProductHome from './home'
 import ProductDetail from './detail'
 import ProductAddUpdate from './add-update'
+import './product.less'
 
 export default class Product extends Component{
      render(){
         return (
           <Switch>
               {/* exact是bool值，true表示路径完全匹配才触发 */}
-              <Route exact path='/product' component={ProductHome}></Route>
+              <Route exact={true} path='/product' component={ProductHome}></Route>
               <Route path='/product/addupdate' component={ProductAddUpdate}></Route>
               <Route path='/product/detail' component={ProductDetail}></Route>
-
-            
               <Redirect to='/product'></Redirect>
                 {/*
               <Route path='/product' component={ProductHome}></Route>

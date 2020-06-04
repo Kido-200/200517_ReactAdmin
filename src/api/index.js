@@ -37,6 +37,7 @@ export const reqWeather = (city)=>{
                 }
             else{
                     //失败了
+                    console.log(err)
                     message.error('获取天气信息失败！')
                 }
         })
@@ -62,3 +63,8 @@ export const reqDeleteImg = (name)=> ajax('/manage/img/delete?name',{name},'POST
 //添加商品 更新商品
 export const reqAddOrUpdateProduct = (product)=> ajax('/manage/product/'+(product._id?'update':'add'),product,'POST')
 
+//根据id获取分类
+export const reqCategory = (categoryId) => ajax('/manage/category/info',{categoryId},'GET')
+
+//更新商品的状态（上架/下架）
+export const reqUpdateStatus = (productId ,status) => ajax('/manage/product/updateStatus',{productId ,status},'POST')
