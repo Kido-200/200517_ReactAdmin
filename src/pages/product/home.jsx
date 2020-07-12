@@ -110,6 +110,7 @@ export default class ProductHome extends Component{
 
     componentDidMount(){
         this.getProducts(1)
+
     }
 
      render(){

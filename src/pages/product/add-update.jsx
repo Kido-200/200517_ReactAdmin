@@ -235,7 +235,7 @@ export default class ProductAddUpdate extends Component{
                        {
                         required:true,
                         message:'商品名称必须输入',
-                        
+
                        },
                        
                    ]}

@@ -68,3 +68,21 @@ export const reqCategory = (categoryId) => ajax('/manage/category/info',{categor
 
 //更新商品的状态（上架/下架）
 export const reqUpdateStatus = (productId ,status) => ajax('/manage/product/updateStatus',{productId ,status},'POST')
+
+//获取所有角色的列表
+export const reqRoles = () => ajax('/manage/role/list',{},'GET')
+
+//添加角色
+export const reqAddRole = (roleName) => ajax('/manage/role/add',{roleName},'POST')
+
+//更新角色
+export const reqUpdateRole = (role) => ajax('/manage/role/update',role,'POST')
+
+//获取所有用户列表
+export const reqUser = () => ajax('/manage/user/list')
+
+//删除指定用户
+export const reqDeleteUser = (userId) => ajax('/manage/user/delete',{userId},'POST')
+
+//添加用户
+export const reqAddOrUpdateUser = (user) => ajax('/manage/user/'+(user._id?'update':'add'),user,'POST')

@@ -17,7 +17,22 @@ import {fetch} from 'whatwg-fetch'
 function obj2String(obj) {
     var urlencoded = new URLSearchParams();
     for (let item in obj) {
-        urlencoded.append(item, obj[item])
+        if(obj[item] instanceof Array)
+           {
+               for(var i = 0;i<obj[item].length;i++)
+               {
+                urlencoded.append(item, obj[item][i]);
+               }
+        // console.log('SHIT',obj[item] instanceof Array,item)
+        //这个append一个数组有问题 ,会直接append进去这数组组成的字符串，用，连接
+        // console.log('OBJ',obj[item])
+        //数组里套数组我感觉是不大可能发生了，这样应该差不多了
+        //要是有这样的需求就只能额外写个函数去递归调用了,还要把urlencoded层层传下去
+           }
+        else{
+            urlencoded.append(item, obj[item])
+        }
+
       }
       return urlencoded
       //URLSearchParams(arr)返回一个URLSearchParams对象
