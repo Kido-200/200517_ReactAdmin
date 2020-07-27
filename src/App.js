@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+//应用的根组件
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, {Component} from 'react'
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
+
+
+import Admin from './pages/admin/admin'
+import Login from './pages/login/login'
+
+
+export default class App extends Component{
+  
+     render(){
+        return (
+            <BrowserRouter>
+            {/* 不加Switch的话，Admin也会显示出来 */}
+            <Switch>
+                <Route path='/login' component={Login}></Route>
+                <Route path='/' component={Admin}></Route>
+                {/* 一开始去路径path='/'，然后Admin校验是否已经登陆，未登陆就Rirect到login。 */}
+            </Switch>
+            </BrowserRouter>
+        )
+    }
 }
-
-export default App;
