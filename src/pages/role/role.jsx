@@ -7,6 +7,7 @@ import AddForm from './add-form'
 import AuthForm from './auth-form'
 import memoryUtils from '../../utils/memoryUtils'
 import {formateDate} from '../../utils/dateUtils'
+import storageUtils from '../../utils/storageUtils'
 
 
 export default class Role extends Component{
@@ -82,7 +83,7 @@ export default class Role extends Component{
                 message.success('添加角色成功')
                 //发送请求获取
                 //this.getRoles()
-                const role = result.data
+                const role = result.data                   
                 // const roles = this.state.roles
                 //产生新的数组，上面这种方法取的应该是地址，直接修改state是不推荐的
                 //下面这种好一些
@@ -91,8 +92,8 @@ export default class Role extends Component{
                 // this.setState({roles})
                 //最推荐的是用函数，返回一个对象
                 this.setState(state => ({
-                    roles:[...state.roles,role]
-                }))
+                        roles:[...state.roles,role]
+                    }))
             }
             else{
                 message.error('添加角色失败')
@@ -120,11 +121,20 @@ export default class Role extends Component{
         //发完这个请求，role里的menus变成['']只有一串字符串了,而不是分成很多元素
         if(result.status===0)
         {
-            message.success('设置角色权限成功')
             // this.getRoles()
-            this.setState({
-                roles:[...this.state.roles]
-            })
+            if(role._id === memoryUtils.user.role_id){
+                memoryUtils.user={}
+                storageUtils.removeUser()
+                this.props.history.replace('/login')
+                message.success('当前用户角色权限修改了，请重新登陆')
+
+            }else{
+                message.success('设置角色权限成功')
+                this.setState({
+                    roles:[...this.state.roles]
+                })
+            }
+            
         }
     }
 
@@ -149,7 +159,13 @@ export default class Role extends Component{
         return (
             <Card title={title}>
                 <Table 
-                rowSelection={{type:'radio',selectedRowKeys:[role._id]}}
+                rowSelection={{
+                    type:'radio',
+                    selectedRowKeys:[role._id],
+                onSelect:(role) => {
+                    this.setState({role})
+                }
+                }}
                 bordered
                 rowKey='_id'
                 dataSource={roles}

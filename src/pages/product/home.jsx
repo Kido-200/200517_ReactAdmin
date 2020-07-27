@@ -135,7 +135,6 @@ export default class ProductHome extends Component{
                             this.setState({search:1},()=>{this.getProducts(1)})
                         else
                             this.setState({search:0},()=>{this.getProducts(1)})
-                        
                   } }>搜索</Button>
              </span>
          )
@@ -158,6 +157,7 @@ export default class ProductHome extends Component{
                 dataSource={products}
                 columns={this.columns}
                 pagination={{
+                    current:this.pageNum,
                     defaultPageSize:PAGE_SIZE,
                     showQuickJumper:true,
                     total:total,

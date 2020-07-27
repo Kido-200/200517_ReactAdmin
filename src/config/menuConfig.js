@@ -17,7 +17,8 @@ const menuList=[
     {
         title:'首页',
         key:'/home',
-        icon:<MailOutlined />
+        icon:<MailOutlined />,
+        isPublic:true
     },
     {
         title:'商品',
