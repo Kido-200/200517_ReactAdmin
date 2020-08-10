@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {Modal} from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {connect} from 'react-redux'
 
 import LinkButton from '../link-button'
 import {formateDate} from '../../utils/dateUtils'
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
 import './index.css'
 import {reqWeather} from '../../api/index'
 import menuList from '../../config/menuConfig'
+import {logout} from '../../redux/actions'
 
 class Header extends Component{
     state = {
@@ -60,10 +60,9 @@ class Header extends Component{
             onOk:()=>{
             //   console.log('OK');
             //删除保存的user数据
-            memoryUtils.user={}
-            storageUtils.removeUser()
+            this.props.logout()
             //跳转刀login
-            this.props.history.replace('/login')
+            // this.props.history.replace('/login')
             },
             onCancel() {
               console.log('Cancel');
@@ -83,8 +82,9 @@ class Header extends Component{
     }
      render(){
         const {currentTime,dayPictureUrl,weather} = this.state
-        const username = memoryUtils.user.username
-        const title = this.getTitle()
+        const username = this.props.user.username
+        // const title = this.getTitle()
+        const title = this.props.headTitle
         return (
             <div className="header">
                 <div className="header-top">
@@ -104,4 +104,7 @@ class Header extends Component{
     }
 }
 
-export default  withRouter(Header)
+export default  connect(
+    state=>({headTitle:state.headTitle,user:state.user}),
+    {logout}
+)(withRouter(Header))

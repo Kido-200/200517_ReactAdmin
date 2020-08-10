@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {Link,withRouter} from 'react-router-dom'
 import { Menu } from 'antd';
+import {connect} from 'react-redux'
+
 
 
 import logo from '../../assets/images/logo.png'
 import './index.less'
 import menuList from '../../config/menuConfig'
-import memoryUtils from '../../utils/memoryUtils'
+import {setHeadTitle} from '../../redux/actions'
 
 const SubMenu = Menu.SubMenu
 
@@ -16,8 +18,8 @@ class LeftNav extends Component{
     //判断当前登陆用户对该item是否有权限
     hasAuth = (item) =>{
         const {key,isPublic} = item
-        const menus = memoryUtils.user.role.menus
-        const username = memoryUtils.user.username
+        const menus = this.props.user.role.menus
+        const username = this.props.user.username
 
         //1. 如果当前用户是admin，直接通过
         //2. 如果当前item是公开的
@@ -81,9 +83,16 @@ class LeftNav extends Component{
             {
                  //向pre添加<Menu.Item>
             if(!item.children){
+                //判断item是否是当前item
+                if(item.key===path || path.indexOf(item.key)===0)
+                {
+                    this.props.setHeadTitle(item.title)
+
+                }
+
                 pre.push((
                     <Menu.Item key={item.key} >
-                    <Link to={item.key} >
+                    <Link to={item.key} onClick={()=>this.props.setHeadTitle(item.title)}>
                         {item.icon}
                     <span>{item.title}</span>
                     </Link>
@@ -183,5 +192,8 @@ class LeftNav extends Component{
 //withRouter高阶组件：让非路由组件也拥有Route的三个属性
 //包装非路由组件，返回一个新的组件
 //新的组件向非路由组件传递3个属性：history/location/match 就是Route那三个
-export default withRouter(LeftNav)
+export default connect(
+    state =>({user:state.user}),
+    {setHeadTitle}
+)(withRouter(LeftNav))
 //这样就可以实现就算刷新，选中的那一栏依旧是被选中。

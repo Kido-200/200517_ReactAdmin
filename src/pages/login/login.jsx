@@ -2,19 +2,18 @@ import React, {Component} from 'react'
 import { Form, Input, Button,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 
 import './login.less'
 import logo from '../../assets/images/logo.png'
-import {reqLogin} from '../../api/index.js'
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
+import {login} from '../../redux/actions'
 
 
 const Item = Form.Item//不能写在import之前
 
 
-const Demo = (history)=>{
+const Demo = (props)=>{
     const [form] = Form.useForm();//需要去与Form标签关联
     // const handleSubmit = (event)=>{
     //     const values = form.getFieldValue()//返回一个对象
@@ -45,24 +44,27 @@ const Demo = (history)=>{
         //请求登陆
         const {username,password} = values;
         console.log(username,password)
-        reqLogin(username,password).then(response =>{
-            console.log('请求成功了')
-            if(response.status==0)
-            {
-                message.success('登陆成功')
-                //跳转到后台管理界面
-                console.log(response.data)
-                const user = response.data
-                memoryUtils.user = user
-                storageUtils.saveUser(user)//保存到local中
-                history.history.replace('/');
-            }
-            else{
-                message.error(response.msg)
-            }
-        }).catch(error=>{
-            console.log('请求失败了',error)
-        })
+
+        props.login(username,password)
+
+        // reqLogin(username,password).then(response =>{
+        //     console.log('请求成功了')
+        //     if(response.status==0)
+        //     {
+        //         message.success('登陆成功')
+        //         //跳转到后台管理界面
+        //         console.log(response.data)
+        //         const user = response.data
+        //         memoryUtils.user = user
+        //         storageUtils.saveUser(user)//保存到local中
+        //         history.history.replace('/');
+        //     }
+        //     else{
+        //         message.error(response.msg)
+        //     }
+        // }).catch(error=>{
+        //     console.log('请求失败了',error)
+        // })
     }
     const onFinishFailed = (values, errorFields, outOfDate)=>{//
         console.log('校验失败',values, errorFields, outOfDate);
@@ -237,16 +239,17 @@ const Demo = (history)=>{
 //                         }
 // }
 // 登陆的路由组件
-export default  class Login extends Component{
+class Login extends Component{
     
     
 
      render(){
          //如果用户已经登陆，自动跳转到管理页面,就阻止了用户自己改url跳过去
-        const user = memoryUtils.user
+        const user = this.props.user
         if(user && user._id){
-            return <Redirect to='/' />
+            return <Redirect to='/home' />
         }
+       const errorMsg = this.props.user.errorMsg
         return (
             <div className="login">
                 <header className="login-header">
@@ -254,8 +257,9 @@ export default  class Login extends Component{
                     <h1>React项目：后台管理系统</h1>
                 </header>
                 <section className="login-content">
+                    <div className={user.errorMsg?'error-msg show':'error-msg'}>{errorMsg}</div>
                     <h2>用户登陆</h2>
-                    <Demo history={this.props.history}/>
+                    <Demo history={this.props.history} login={this.props.login} />
                 </section>
             </div>
         )
@@ -265,3 +269,7 @@ export default  class Login extends Component{
 1.前台表单认证
 2.收集表单数据
 */
+export default connect(
+    state=>({user:state.user}),
+    {login}
+)(Login)

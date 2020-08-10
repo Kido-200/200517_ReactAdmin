@@ -25,6 +25,7 @@
   background-color: white;
   margin: 50px auto;
   padding: 20px 40px;
+  position: relative;
 }
 .login .login-content h2 {
   font-size: 30px;
@@ -34,5 +35,23 @@
 }
 .login .login-content .login-form .login-form-button {
   width: 100%;
+}
+.login .login-content .error-msg {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  height: 30px;
+  width: 100%;
+  background-color: #f60c1a;
+  color: #ffffff;
+  font-size: 16px;
+  transform: translateY(-30px);
+  transition: all 0.3s;
+}
+.login .login-content .error-msg.show {
+  visibility: visible;
+  transform: translateY(0);
 }
 /*# sourceMappingURL=./login.css.map */
