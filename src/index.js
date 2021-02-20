@@ -7,7 +7,7 @@ import {Provider} from 'react-redux'
 import App from './App'
 import store from './redux/store'
 
-//读取local中保存user，保存到内存中
+
 
 ReactDom.render(
 <Provider store={store}>

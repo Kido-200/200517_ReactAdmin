@@ -14,6 +14,7 @@ import PicturesWall from './pictures-wall'
 import LinkButton from '../../components/link-button'
 import {reqCategorys,reqAddOrUpdateProduct} from '../../api/index'
 import RichTestEditor from './rich-text-editor'
+import memoryUtils from '../../utils/memoryUtils'
 
 const {Item} = Form
 const {TextArea} = Input
@@ -24,11 +25,16 @@ const {TextArea} = Input
 //Product的添加和更新的子路由组件
 export default class ProductAddUpdate extends Component{
 
-    constructor(props)
+    constructor(...props)
     {
-        super(props)
+        super(...props)
         this.pw = React.createRef()
         this.editor = React.createRef()
+    }
+
+    
+    componentWillUnmount(){
+        memoryUtils.product = {}
     }
 
     state = {
@@ -175,9 +181,9 @@ export default class ProductAddUpdate extends Component{
       componentWillMount(){
           //取出携带的state
           //如果是修改，location.state我们传了product，添加的话就是空
-          const product = this.props.location.state
+          const product = memoryUtils.product
           //强制转成bool类型
-          this.isUpdate = !!product
+          this.isUpdate = !!product._id
           this.product = product||{}
       }
 

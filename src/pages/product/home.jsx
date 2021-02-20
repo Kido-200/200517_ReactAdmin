@@ -5,6 +5,7 @@ import {PlusOutlined} from '@ant-design/icons'
 import LinkButton from '../../components/link-button'
 import {reqProducts,reqSearchProducts,reqUpdateStatus} from '../../api/index'
 import {PAGE_SIZE} from '../../utils/constants'
+import memoryUtils from '../../utils/memoryUtils'
 const Option = Select.Option
 //Product的默认子路由组件
 export default class ProductHome extends Component{
@@ -65,14 +66,33 @@ export default class ProductHome extends Component{
                     // console.log(product,'product')
                     return (
                         <span>
-                            <LinkButton onClick={() => this.props.history.push('/product/detail',{product})}>详情</LinkButton>
-                            <LinkButton onClick={() => this.props.history.push('./product/addupdate',product)}>修改</LinkButton>
+                            {/* <LinkButton onClick={() => this.props.history.push('/product/detail',{product})}>详情</LinkButton> */}
+                            {/* <LinkButton onClick={() => this.props.history.push('./product/addupdate',product)}>修改</LinkButton> */}
+
+                            <LinkButton onClick={()=> this.showDetail(product)}>详情</LinkButton>
+                            <LinkButton onClick={() => this.showUpdate(product)}>修改</LinkButton>
                         </span>
                     )
                 }
               },
           ];
 
+    }
+
+    showDetail = (product) =>{
+
+
+        //缓存product对象 给detail使用
+        memoryUtils.product = product
+        // console.log('???',memoryUtils.product)
+
+        this.props.history.push('/product/detail')
+    }
+
+    showUpdate = (product) =>{
+        memoryUtils.product = product
+        console.log(product);
+        this.props.history.push('/product/addupdate')
     }
 
     //获取指定页面的列表数据显示

@@ -11,6 +11,24 @@ import { message } from 'antd'
 
 //登陆
 export const reqLogin =  (username,password) => ajax('/login',{username,password},'POST')
+// export const reqLogin =  (username,password) => fetch('/login',{
+//     body:JSON.stringify({username,password}),
+//     method:'POST',
+//     headers: new Headers({
+//         'Accept': 'application/json',//表示我想要接受的数据类型
+//         'Content-Type': 'application/json'
+//     }), 
+// })
+// export const reqLogin =  (username,password) => fetch('/login',{
+//     body:JSON.stringify({username,password}),
+//     method:'POST',
+//     headers: new Headers({
+//         'Accept': 'application/json',//表示我想要接受的数据类型
+//         'Content-Type': 'application/json'
+//     }), 
+// }).then(data => data.json())
+
+
 
 //添加用户
 export const reqAdd = (user) => ajax('/manage/user/add',user,'POST')

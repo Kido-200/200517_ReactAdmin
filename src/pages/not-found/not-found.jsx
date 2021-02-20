@@ -1,11 +1,12 @@
 import React,{Component} from 'react'
 import {Button,Row,Col} from 'antd'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 
 import {setHeadTitle} from '../../redux/actions'
 import './not-found.less'
 
-export default class NotFound extends Component{
+
+class NotFound extends Component{
     goHome = () =>{
         this.props.setHeadTitle('首页')
         this.props.history.replace('/home')
@@ -27,3 +28,7 @@ export default class NotFound extends Component{
         )
     }
 }
+export default connect(
+    state=>({}),
+    {setHeadTitle}
+)(NotFound)

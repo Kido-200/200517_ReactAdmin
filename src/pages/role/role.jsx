@@ -10,7 +10,7 @@ import {formateDate} from '../../utils/dateUtils'
 import {logout} from '../../redux/actions'
 
 
- class Role extends Component{
+class Role extends Component{
 
     state = {
         roles:[],//所有的roles
@@ -19,8 +19,8 @@ import {logout} from '../../redux/actions'
         isShowAuth:false
     }
 
-    constructor (props){
-        super(props)
+    constructor (...props){
+        super(...props)
         this.auth = React.createRef()
     }
 
@@ -65,6 +65,7 @@ import {logout} from '../../redux/actions'
         return {
             onClick : event =>{
                 console.log('row onClick()',role)
+                console.log(this.props);
                 this.setState({role})
             }
         }
@@ -113,6 +114,7 @@ import {logout} from '../../redux/actions'
         //得到最新的menus
         const menus = this.auth.current.getMenus()
         role.menus = menus
+        // console.log('atttt',this.props.user)
         role.auth_name = this.props.user.username
         role.auth_time = Date.now()
         console.log(role.auth_time)
@@ -205,7 +207,8 @@ import {logout} from '../../redux/actions'
         )
     }
 }
+
 export default connect(
-    state=>({user:state.props}),
+    state=>({user:state.user}),
     {logout}
 )(Role)

@@ -31,7 +31,7 @@ export const logout = () => {
 
 //登陆的异步action
 export const login = (username,password) =>{
-    return async dispatch =>{
+    return async (dispatch,getState) =>{
         //1.执行异步ajax请求
         const result = await reqLogin(username,password) //{status:0,data:user}
         //2.如果成功了，分发成功的同步action

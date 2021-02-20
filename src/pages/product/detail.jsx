@@ -7,6 +7,7 @@ import {ArrowLeftOutlined} from '@ant-design/icons'
 import LinkButton from '../../components/link-button'
 import {BASE_IMG_URL} from '../../utils/constants'
 import {reqCategory} from '../../api/index'
+import memoryUtils from '../../utils/memoryUtils'
 
 const Item = List.Item
 
@@ -18,8 +19,9 @@ export default class ProductDetail extends Component{
     }
 
     async componentDidMount(){
-        console.log('do')
-        const {pCategoryId,categoryId} = this.props.location.state.product
+        // const {pCategoryId,categoryId} = this.props.location.state.product
+        // console.log('now',memoryUtils.product)
+        const {pCategoryId,categoryId} = memoryUtils.product
         if(pCategoryId==='0')
         {
             const result = await reqCategory(categoryId)
@@ -43,9 +45,17 @@ export default class ProductDetail extends Component{
         
     }
 
+    componentWillUnmount(){
+        memoryUtils.product = {}
+    }
+
      render(){
-        const {name,desc,price,detail,imgs} = this.props.location.state.product
+        // const {name,desc,price,detail,imgs} = this.props.location.state.product
+        const {name,desc,price,detail,imgs} = memoryUtils.product
+        // console.log(memoryUtils.product)
+
         const {cName1,cName2} = this.state
+
         const title = (
             <span>
                 <LinkButton>

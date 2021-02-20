@@ -101,7 +101,6 @@ export default function ajax(url,data={},method='GET'){
     }
     else{
         const searchStr = obj2String(data);
-        // console.log(searchStr)
         initObj = {
             method:method,
             headers: new Headers({

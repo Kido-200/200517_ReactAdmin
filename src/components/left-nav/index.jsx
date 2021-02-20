@@ -147,7 +147,7 @@ class LeftNav extends Component{
                  <div  className="left-nav">
                 <Link to="/" className="left-nav-header">
                     <img src={logo} alt="logo"/>
-                    <h1>硅谷后台</h1>
+                    <h1>后台管理</h1>
                 </Link> 
                     
                 <Menu
